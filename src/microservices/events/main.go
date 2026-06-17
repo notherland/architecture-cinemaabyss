@@ -33,6 +33,11 @@ type Payment struct {
 	MethodType string    `json:"method_type"`
 }
 
+type EventResponse struct {
+	Status string      `json:"status"`
+	Event  interface{} `json:"event"`
+}
+
 var (
 	movieProducer   *kafka.Writer
 	userProducer    *kafka.Writer
@@ -84,6 +89,15 @@ func handleHealth(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]bool{"status": true})
 }
 
+func writeEventResponse(w http.ResponseWriter, event interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(EventResponse{
+		Status: "success",
+		Event:  event,
+	})
+}
+
 func handleMovieEvents(w http.ResponseWriter, r *http.Request) {
 	var payload Movie
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
@@ -95,9 +109,7 @@ func handleMovieEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(payload)
+	writeEventResponse(w, payload)
 	log.Println("Movie events published successfully: ", payload)
 }
 
@@ -112,9 +124,7 @@ func handleUserEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(payload)
+	writeEventResponse(w, payload)
 	log.Println("User events published successfully: ", payload)
 }
 
@@ -129,8 +139,6 @@ func handlePaymentEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(payload)
+	writeEventResponse(w, payload)
 	log.Println("Payment events published successfully: ", payload)
 }
