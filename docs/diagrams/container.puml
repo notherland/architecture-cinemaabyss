@@ -1,0 +1,46 @@
+@startuml
+title CinemaAbyss Container Diagram
+
+top to bottom direction
+
+!include <C4/C4_Container>
+
+Person(user, "Пользователь", "Пользователь системы Теплый Дом")
+
+System(CinemaAbyss, "CinemaAbyss System", "Стримминговый сервис")
+
+Container_Boundary(CinemaAbyss, "Стримминговый сервис") {
+  Container(ApiGateway, "Сервис управления польщовательскими запросами", "Go", "Управляет авторизацией/аутентификацией и маршрутизацией")
+  Container(MovieApp, "Сервис управления данными о фильмах", "Go", "Обрабатывает запросы создания/управления фильмов")
+  Container(RateApp, "Сервис управления скидками", "Go", "Обрабатывает запросы создания/управления скидок")
+  Container(UserApp, "Сервис управления пользователем", "Go", "Управляет пользователем")
+  Container(SubscriptionApp, "Сервис управления подписками", "Go", "Управляет подписками")
+  Container(PaymentApp, "PaymentService", "Go", "Обрабатывает платежи подписок")
+  Container(MovieDatabase, "MovieDatabase", "PostgreSQL", "Хранит данные о фильмах")
+  Container(RateDatabase, "RateDatabase", "PostgreSQL", "Хранит данные о скидках")
+  Container(UserDatabase, "UserDatabase", "PostgreSQL", "Хранит данные о пользователях")
+  Container(SubscriptionDatabase, "SubscriptionDatabase", "PostgreSQL", "Хранит данные о подписках")
+  Container(PaymentDatabase, "PaymentDatabase", "PostgreSQL", "Хранит данные о платежах")
+}
+
+
+System_Ext(recommendations, "Recommendation Service", "Внешняя банковская система рекомендаций")
+
+Rel(ApiGateway, MovieApp, "Маршрутизирует запрос")
+Rel(ApiGateway, RateApp, "Маршрутизирует запрос")
+Rel(ApiGateway, UserApp, "Маршрутизирует запрос")
+Rel(ApiGateway, SubscriptionApp, "Маршрутизирует запрос")
+Rel(ApiGateway, PaymentApp, "Маршрутизирует запрос")
+Rel(ApiGateway, recommendations, "Маршрутизирует запрос")
+Rel(user, ApiGateway, "Отправляет запрос")
+
+
+Rel(MovieApp,MovieDatabase,"Сохраняет/читает данные")
+Rel(RateApp,RateDatabase,"Сохраняет/читает данные")
+Rel(SubscriptionApp,SubscriptionDatabase,"Сохраняет/читает данные")
+Rel(UserApp,UserDatabase,"Сохраняет/читает данные")
+Rel(PaymentApp,PaymentDatabase,"Сохраняет/читает данные")
+
+
+
+@enduml
