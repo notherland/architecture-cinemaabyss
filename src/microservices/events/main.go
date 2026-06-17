@@ -66,7 +66,7 @@ func main() {
 	go onEvent(userConsumer)
 	go onEvent(paymentConsumer)
 
-	http.HandleFunc("/health", handleHealth)
+	http.HandleFunc("/api/events/health", handleHealth)
 	http.HandleFunc("/api/events/user", handleUserEvents)
 	http.HandleFunc("/api/events/movie", handleMovieEvents)
 	http.HandleFunc("/api/events/payment", handlePaymentEvents)
@@ -95,6 +95,9 @@ func handleMovieEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(payload)
 	log.Println("Movie events published successfully: ", payload)
 }
 
@@ -109,6 +112,9 @@ func handleUserEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(payload)
 	log.Println("User events published successfully: ", payload)
 }
 
@@ -123,5 +129,8 @@ func handlePaymentEvents(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(payload)
 	log.Println("Payment events published successfully: ", payload)
 }
