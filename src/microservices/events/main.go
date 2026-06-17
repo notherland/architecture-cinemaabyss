@@ -18,10 +18,10 @@ type User struct {
 }
 
 type Movie struct {
-	ID     int      `json:"movie_id"`
-	Title  string   `json:"title"`
-	Action string   `json:"action"`
-	UserId []string `json:"user_id"`
+	ID     int    `json:"movie_id"`
+	Title  string `json:"title"`
+	Action string `json:"action"`
+	UserId int    `json:"user_id"`
 }
 
 type Payment struct {
@@ -30,7 +30,7 @@ type Payment struct {
 	Amount     float64   `json:"amount"`
 	Status     string    `json:"status"`
 	Timestamp  time.Time `json:"timestamp"`
-	MethodType time.Time `json:"method_type"`
+	MethodType string    `json:"method_type"`
 }
 
 var (
