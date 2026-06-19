@@ -5,8 +5,7 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
-
+![Диаграма контейнеров](https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/notherland/architecture-cinemaabyss/refs/heads/cinema/docs/diagrams/container.puml)
 # Задание 2
 
 ### 1. Proxy
@@ -58,6 +57,13 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka из UI http://localhost:8090 
+
+![img_5.png](img_5.png)
+![img_6.png](img_6.png)
+![img_7.png](img_7.png)
+![img_8.png](img_8.png)
+<img width="660" height="614" alt="image" src="https://github.com/user-attachments/assets/2ad72925-42b5-4228-983a-4048a7b62822" />
+
 
 # Задание 3
 
@@ -271,9 +277,16 @@ cat .docker/config.json | base64
   ```
   Часть тестов с health-чек упадет, но создание событий отработает.
   Откройте логи event-service и сделайте скриншот обработки событий
-
+![img_3.png](img_3.png)
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+
+![img_4.png](img_4.png)
+
+![img.png](img.png)
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+
 
 
 # Задание 4
@@ -349,6 +362,8 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+![img_9.png](img_9.png)
+![img_10.png](img_10.png)
 
 ## Удаляем все
 
