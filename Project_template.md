@@ -62,6 +62,8 @@
 ![img_6.png](img_6.png)
 ![img_7.png](img_7.png)
 ![img_8.png](img_8.png)
+<img width="660" height="614" alt="image" src="https://github.com/user-attachments/assets/2ad72925-42b5-4228-983a-4048a7b62822" />
+
 
 # Задание 3
 
